@@ -25,11 +25,11 @@ IRenderPipeline3D::IRenderPipeline3D()
 	mTexCoord_offsetY=0.0f;
 	mTexCoord_scale=1.0f;
 	mCameraPos = { 0,0,0 };
-	mLightEnabled = TRUE;
+	mLightEnabled = true;
 	for (UINT i = 0;i < c_maxLightCount;++i)memset(&mDirLight[i],0,sizeof(DirectionalLight));
 }
 
-BOOL IRenderPipeline3D::Init(RenderPipeline_InitData & initData)
+bool IRenderPipeline3D::Init(RenderPipeline_InitData & initData)
 {
 	mBufferWidth = initData.bufferWidth;
 	mBufferHeight = initData.bufferHeight;
@@ -40,7 +40,7 @@ BOOL IRenderPipeline3D::Init(RenderPipeline_InitData & initData)
 	else
 	{
 		DEBUG_MSG1("Render PipeLine: color buffer ptr invalid!!");
-		return FALSE;
+		return false;
 	}
 
 
@@ -51,10 +51,10 @@ BOOL IRenderPipeline3D::Init(RenderPipeline_InitData & initData)
 	else
 	{
 		DEBUG_MSG1("Render PipeLine: Z buffer ptr invalid!!");
-		return FALSE;
+		return false;
 
 	}
-	return TRUE;
+	return true;
 }
 
 void IRenderPipeline3D::DrawTriangles(RenderPipeline_DrawCallData & drawCallData)
@@ -163,7 +163,7 @@ void IRenderPipeline3D::SetCameraPos(const VECTOR3 & vec)
 	mCameraPos = vec;
 }
 
-void IRenderPipeline3D::SetLightingEnabled(BOOL enabled)
+void IRenderPipeline3D::SetLightingEnabled(bool enabled)
 {
 	mLightEnabled = enabled;
 }
@@ -387,7 +387,7 @@ void IRenderPipeline3D::RasterizeTriangles()
 		//------------ horizontal scan line Intersection ------------
 		for (int j = int(minY);j < int(maxY) + 1;++j)
 		{
-			BOOL intersectSucceeded = FALSE;
+			bool intersectSucceeded = false;
 			UINT x1 = 0, x2 = 0;
 			intersectSucceeded =
 				mFunction_HorizontalIntersect(float(j), v1_pixel, v2_pixel, v3_pixel, x1, x2);
@@ -396,7 +396,7 @@ void IRenderPipeline3D::RasterizeTriangles()
 			//x2 = Clamp(x2, 0, mBufferWidth - 1);
 
 			//if intersect succeed, we will get X region [x1,x2] which indicate the range of pixels to fill
-			if (intersectSucceeded == TRUE)
+			if (intersectSucceeded == true)
 			{
 				//-----------------FOR EACH RASTERIZED FRAGMENT----------------
 				for (UINT i = x1;i <= x2;++i)
@@ -419,7 +419,7 @@ void IRenderPipeline3D::RasterizeTriangles()
 
 					//depth correct interpolation ,then perform depth test
 					float depth = 1.0f / (s / v2.posH.z + t / v3.posH.z + (1 - s - t) / v1.posH.z);
-					if (mFunction_DepthTest(i, j, depth) == FALSE)goto label_nextPixel;
+					if (mFunction_DepthTest(i, j, depth) == false)goto label_nextPixel;
 
 					//write to  depth buffer
 					mFunction_SetZ(i, j, depth);
@@ -478,7 +478,7 @@ void IRenderPipeline3D::RasterizePoints()
 
 		//perform depth test
 		float depth = v1.posH.z;
-		if (mFunction_DepthTest(UINT(v1_pixel.x), UINT(v1_pixel.y), depth) == FALSE)goto label_nextPixel;
+		if (mFunction_DepthTest(UINT(v1_pixel.x), UINT(v1_pixel.y), depth) == false)goto label_nextPixel;
 
 
 		//I will use normal bilinear interpolation to see the result first
@@ -530,7 +530,7 @@ void IRenderPipeline3D::PixelShader_DrawPoints(RasterizedFragment & inVertex)
 
 ************************************************************/
 
-BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v1, const VECTOR2 & v2, const VECTOR2 & v3, UINT & outX1, UINT & outX2)
+bool IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v1, const VECTOR2 & v2, const VECTOR2 & v3, UINT & outX1, UINT & outX2)
 {
 	const VECTOR2 triangleVertices[3] = { v1,v2,v3 };
 
@@ -542,7 +542,7 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 
 
 	//line-line intersection
-	const auto func_intersect = [](float y, const VECTOR2& v1, const VECTOR2& v2, VECTOR2& outVec)->BOOL
+	const auto func_intersect = [](float y, const VECTOR2& v1, const VECTOR2& v2, VECTOR2& outVec)->bool
 	{
 		bool b1 = v1.y > y && v2.y < y;
 		bool b2 = v1.y < y && v2.y > y;
@@ -550,11 +550,11 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 		if (b1||b2)
 		{
 			outVec = Lerp(v1, v2, (y - v1.y) / (v2.y - v1.y));
-			return TRUE;
+			return true;
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	};
 
@@ -567,7 +567,7 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 		case 0:
 		{
 			//then we'll have check all of 3 segments
-			BOOL canIntersect = FALSE;
+			bool canIntersect = false;
 			std::vector<VECTOR2> intersectPointList;
 
 			VECTOR2 tmpVec;
@@ -586,12 +586,12 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 				outX1 = UINT(Clamp(intersectPointList.at(0).x,0,float(mBufferWidth)));
 				outX2 = UINT(Clamp(intersectPointList.at(1).x,0,float(mBufferWidth)));
 				if (outX1 > outX2)std::swap(outX1, outX2);
-				return TRUE;
+				return true;
 			}
 			else
 			{
 				//intersection failed, less than 2 points are intersected.
-				return FALSE;
+				return false;
 			}
 
 			break;
@@ -602,7 +602,7 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 		case 1:
 		{
 			VECTOR2 tmpVec;
-			BOOL canOppositeLineSegmentIntersect = FALSE;
+			bool canOppositeLineSegmentIntersect = false;
 			switch (indexList_sameYCoord.at(0))
 			{
 			case 0:
@@ -616,17 +616,17 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 				break;
 			}
 
-			if (canOppositeLineSegmentIntersect==TRUE)
+			if (canOppositeLineSegmentIntersect==true)
 			{
 				outX1 = UINT(Clamp(tmpVec.x,0,float(mBufferWidth)));//new intersect point
 				outX2 = UINT(Clamp(triangleVertices[indexList_sameYCoord.at(0)].x,0,float(mBufferWidth)));//the one on the tested-y line
 				if (outX1 > outX2)std::swap(outX1, outX2);
-				return TRUE;
+				return true;
 			}
 			else
 			{
 				//the opposite line segment didn't intersect
-				return FALSE;
+				return false;
 			}
 
 			break;
@@ -639,12 +639,12 @@ BOOL IRenderPipeline3D::mFunction_HorizontalIntersect(float y, const VECTOR2 & v
 			outX1 = UINT(Clamp(triangleVertices[indexList_sameYCoord.at(0)].x,0,float(mBufferWidth)));//new intersect point
 			outX2 = UINT(Clamp(triangleVertices[indexList_sameYCoord.at(1)].x,0,float(mBufferWidth)));//the one on the tested-y line
 			if (outX1 > outX2)std::swap(outX1, outX2);
-			return TRUE;
+			return true;
 			break;
 		}
 
 		default:
-			return FALSE;
+			return false;
 	}
 
 }
@@ -659,17 +659,17 @@ inline float IRenderPipeline3D::mFunction_GetZ(UINT x, UINT y)
 	return m_pZBuffer->at(y*mBufferWidth + x);
 }
 
-inline BOOL IRenderPipeline3D::mFunction_DepthTest(UINT x, UINT y, float testZ)
+inline bool IRenderPipeline3D::mFunction_DepthTest(UINT x, UINT y, float testZ)
 {
 	float& targetZ = m_pZBuffer->at(y*mBufferWidth + x);
 	if (testZ <= targetZ&&testZ>0.0f)
 	{
 		targetZ = testZ;
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -682,7 +682,7 @@ VECTOR4 IRenderPipeline3D::mFunction_VertexLighting(const VECTOR3& vPosW, const 
 	//traverse every lights
 	for (UINT i = 0;i < c_maxLightCount;++i)
 	{
-		if (mDirLight[i].mIsEnabled == TRUE)
+		if (mDirLight[i].mIsEnabled == true)
 		{
 			//normalized light vector
 			VECTOR3 unitIncomingLightVec = mDirLight[i].mDirection;

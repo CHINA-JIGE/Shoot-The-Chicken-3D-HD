@@ -14,7 +14,7 @@ public:
 
 	void		Init(UINT bufferWidth,UINT bufferHeight);
 
-	void		Clear(COLOR3 clearColor=COLOR3(0,0,0),BOOL clearZBuff=TRUE);
+	void		Clear(COLOR3 clearColor=COLOR3(0,0,0),bool clearZBuff=true);
 
 	void		SetCamera(ICamera& cam);
 
@@ -24,7 +24,7 @@ public:
 
 	void		RenderPointCollection(IPointCollection& collection);
 
-	BOOL	DrawPicture(IPicture& pic, UINT x1, UINT y1, UINT x2, UINT y2);
+	bool	DrawPicture(IPicture& pic, UINT x1, UINT y1, UINT x2, UINT y2);
 
 	void		DrawLine(COLOR3 color, UINT x1, UINT y1, UINT x2, UINT y2);
 

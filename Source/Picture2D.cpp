@@ -18,19 +18,19 @@ IPicture::~IPicture()
 	delete m_pColorBuffer;
 }
 
-BOOL IPicture::LoadPPM(std::string ppmFilePath)
+bool IPicture::LoadPPM(std::string ppmFilePath)
 {
-	BOOL yes=IFileManager::ImportFile_PPM(ppmFilePath, mWidth, mHeight, *m_pColorBuffer);
-	if (yes == TRUE)
+	bool yes=IFileManager::ImportFile_PPM(ppmFilePath, mWidth, mHeight, *m_pColorBuffer);
+	if (yes == true)
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		mWidth = 0;
 		mHeight = 0;
 		DEBUG_MSG1("IPicture: Load PPM failed!!");
-		return FALSE;
+		return false;
 	}
 }
 

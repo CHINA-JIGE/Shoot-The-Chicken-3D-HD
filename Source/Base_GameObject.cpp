@@ -23,7 +23,7 @@ void Base_GameObject::ReduceHP(float deltaHP)
 	mHP -= deltaHP;
 }
 
-BOOL Base_GameObject::IsDead()
+bool Base_GameObject::IsDead()
 {
 	return (mHP<=0.0f);
 }

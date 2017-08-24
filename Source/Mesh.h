@@ -21,13 +21,13 @@
 
 		void CreateBox(float fWidth, float fHeight, float fDepth, UINT iDepthStep = 3, UINT iWidthStep = 3, UINT iHeightStep = 3);
 
-		void	CreateSphere(float fRadius, UINT iColumnCount = 20, UINT iRingCount = 20,BOOL bInvertNormal=FALSE);
+		void	CreateSphere(float fRadius, UINT iColumnCount = 20, UINT iRingCount = 20,bool bInvertNormal=false);
 
 		void CreateCylinder(float fRadius, float fHeight, UINT iColumnCount = 40, UINT iRingCount = 8);
 
-		BOOL	LoadFile_STL(std::string pFilePath);
+		bool	LoadFile_STL(std::string pFilePath);
 
-		BOOL	LoadFile_OBJ(std::string pFilePath);
+		bool	LoadFile_OBJ(std::string pFilePath);
 
 		void		SetColor(const VECTOR4& color);
 

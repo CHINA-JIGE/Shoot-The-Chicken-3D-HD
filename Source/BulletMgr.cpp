@@ -34,7 +34,7 @@ void IBulletManager::SpawnBullet(const VECTOR3 & pos, const VECTOR3 & velocity, 
 	mat.diffuse = { (rand() % 255) / 255.0f,(rand() % 255) / 255.0f,(rand() % 255) / 255.0f };
 	IMesh* pM = new IMesh;
 	m_pRenderMeshList->push_back(pM);
-	pM->CreateSphere(5.0f, 4, 4, FALSE);
+	pM->CreateSphere(5.0f, 4, 4, false);
 	pM->SetMaterial(mat);*/
 
 }
@@ -56,7 +56,7 @@ void IBulletManager::KillAllBullet()
 	mRenderPointList.ClearAll();
 }
 
-void IBulletManager::CollisionDetection(BOUNDINGBOX testBox,BOOL killCollidedBullets, std::vector<VECTOR3>& outCollidePointsList)
+void IBulletManager::CollisionDetection(BOUNDINGBOX testBox,bool killCollidedBullets, std::vector<VECTOR3>& outCollidePointsList)
 {
 	outCollidePointsList.clear();
 
@@ -70,7 +70,7 @@ void IBulletManager::CollisionDetection(BOUNDINGBOX testBox,BOOL killCollidedBul
 
 		VECTOR3 outIntersectPoint;
 		//Apply Ray(segment)-AABB intersection
-		if (Intersect_Ray_AABB(currentPos, nextPos, testBox, outIntersectPoint,TRUE))
+		if (Intersect_Ray_AABB(currentPos, nextPos, testBox, outIntersectPoint,true))
 		{
 			//user might like to know the intersect position to adequately react
 			outCollidePointsList.push_back(outIntersectPoint);

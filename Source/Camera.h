@@ -59,9 +59,9 @@ using namespace Math;
 
 		void				RotateZ_Roll(float angleZ);
 
-		void				fps_MoveForward(float fSignedDistance, BOOL enableYAxisMovement = FALSE);
+		void				fps_MoveForward(float fSignedDistance, bool enableYAxisMovement = false);
 
-		void				fps_MoveRight(float fSignedDistance, BOOL enableYAxisMovement = FALSE);
+		void				fps_MoveRight(float fSignedDistance, bool enableYAxisMovement = false);
 
 		void				fps_MoveUp(float fSignedDistance);
 

@@ -18,7 +18,7 @@ ITimer::ITimer(TIMER_TIMEUINT timeUnit)
 	mMilliSecondsPerCount	= 0.0;
 	mDeltaTime				= 0.0;
 	mTotalTime				= 0.0;
-	mIsPaused				= FALSE;
+	mIsPaused				= false;
 
 	//每秒可以数多少次
 	INT64 countsPerSecond;
@@ -48,7 +48,7 @@ void ITimer::NextTick()
 
 		//如果在省电模式下，若切换处理器可能会导致counts也是负的
 		mDeltaCount = mCurrentCount - mPrevCount;
-		BOOL isDeltaTimePositive = ((mDeltaCount) > 0);
+		bool isDeltaTimePositive = ((mDeltaCount) > 0);
 		if(isDeltaTimePositive)
 		{
 			mDeltaTime =(double)(mDeltaCount * mMilliSecondsPerCount);
@@ -118,19 +118,19 @@ void ITimer::SetTimeUnit(TIMER_TIMEUINT timeUnit)
 
 void ITimer::Pause()
 {
-	mIsPaused = TRUE;
+	mIsPaused = true;
 };
 
 void ITimer::Continue()
 {
-	mIsPaused = FALSE;
+	mIsPaused = false;
 };
 
 void ITimer::ResetAll()
 {
 	mTotalTime	= 0.0;
 	mDeltaTime	= 0.0;
-	mIsPaused	= FALSE;
+	mIsPaused	= false;
 };
 
 void ITimer::ResetTotalTime()

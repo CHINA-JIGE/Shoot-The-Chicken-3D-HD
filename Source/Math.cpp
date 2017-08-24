@@ -256,7 +256,7 @@ inline VECTOR3 Math::Lerp(const VECTOR3& start, const VECTOR3& end, float t)
 	return VECTOR3(Lerp(start.x, end.x, t), Lerp(start.y, end.y, t),Lerp(start.z,end.z,t));
 }
 
-inline BOOL Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& rayEnd, const BOUNDINGBOX& box, VECTOR3& outIntersectPoint,BOOL testFrontSide)
+inline bool Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& rayEnd, const BOUNDINGBOX& box, VECTOR3& outIntersectPoint,bool testFrontSide)
 {
 	/*
 	Y
@@ -275,23 +275,23 @@ inline BOOL Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& ray
 	std::vector<std::pair<VECTOR3,float>> intersectResult;
 
 	//determine if one point is within a rectangle
-	auto func_isPointInArea= [](const VECTOR2& p,const VECTOR2& min, const VECTOR2& max)->BOOL
+	auto func_isPointInArea= [](const VECTOR2& p,const VECTOR2& min, const VECTOR2& max)->bool
 	{
 		if (p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y)
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	};
 
 	//compute intersect point, add to list if intersect succeed
-	auto func_intersect = [&](float t, const VECTOR2& min, const VECTOR2& max, VECTOR3 faceNorm, BOOL testFrontSide)
+	auto func_intersect = [&](float t, const VECTOR2& min, const VECTOR2& max, VECTOR3 faceNorm, bool testFrontSide)
 	{
-		//if testFrontSide==TRUE && ray come from the back
-		if (Vec3_Dot(faceNorm, rayEnd - rayStart) > 0.0f && testFrontSide == TRUE)
+		//if testFrontSide==true && ray come from the back
+		if (Vec3_Dot(faceNorm, rayEnd - rayStart) > 0.0f && testFrontSide == true)
 		{
 			return;
 		}
@@ -304,7 +304,7 @@ inline BOOL Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& ray
 				VECTOR2(intersectPoint.x, intersectPoint.y),
 				VECTOR2(min.x, min.y),
 				VECTOR2(max.x, max.y)
-				) == TRUE)
+				) == true)
 			{
 				intersectResult.push_back(std::make_pair(intersectPoint,t));
 			}
@@ -372,7 +372,7 @@ inline BOOL Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& ray
 	if (intersectResult.size() == 0)
 	{
 		outIntersectPoint = { 0,0,0 };
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -390,7 +390,7 @@ inline BOOL Math::Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& ray
 
 		//finish traversal, output nearest point
 		outIntersectPoint = intersectResult.at(nearestPointIndex).first;
-		return TRUE;
+		return true;
 	}
 
 }

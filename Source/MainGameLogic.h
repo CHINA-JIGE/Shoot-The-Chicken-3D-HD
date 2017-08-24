@@ -28,7 +28,7 @@ namespace GamePlay
 
 		void					mFunction_UpdateAndRenderPlaying();
 
-		void					mFunction_UpdateAndRender_GameOverMenu(BOOL hasWon);
+		void					mFunction_UpdateAndRender_GameOverMenu(bool hasWon);
 
 		void					mFunction_UpdateAndRender_PauseMenu();
 
@@ -37,14 +37,14 @@ namespace GamePlay
 		//..............OTHERS
 		void					mFunction_CollisionDetectionAndInteract();
 
-		void					mFunction_GameOverAnimationInit(BOOL hasPlayerWon);
+		void					mFunction_GameOverAnimationInit(bool hasPlayerWon);
 
 		IChickenMonster			mChickenBoss;
 		IPlayer							mPlayer;
 		ISceneModelManager	mSceneMgr;
 		IBulletManager				mBulletMgr;
 		int								mMainGameState;
-		BOOL							mIsPlayerVictorious;//has player won??
+		bool							mIsPlayerVictorious;//has player won??
 
 		IPicture				mPauseMenuBgr_Continue;
 		IPicture				mPauseMenuBgr_Back;

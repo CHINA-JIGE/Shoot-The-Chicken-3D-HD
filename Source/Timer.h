@@ -59,7 +59,7 @@ private:
 			//时间制
 			TIMER_TIMEUINT	mTimeUnit;
 			//
-			BOOL					mIsPaused;
+			bool					mIsPaused;
 			//queryPerformance貌似返回的是绝对count而不是两次query间的count
 			INT64					mPrevCount;
 			//

@@ -69,7 +69,7 @@ void IMesh::CreateBox(float fWidth,float fHeight,float fDepth,UINT iDepthStep,UI
 	mMeshGenerator.CreateBox(fWidth, fHeight, fDepth, iDepthStep, iWidthStep, iHeightStep, *m_pVB_Mem, *m_pIB_Mem);
 }
 
-void	IMesh::CreateSphere(float fRadius,UINT iColumnCount, UINT iRingCount, BOOL bInvertNormal)
+void	IMesh::CreateSphere(float fRadius,UINT iColumnCount, UINT iRingCount, bool bInvertNormal)
 {
 	//check if the input "Step Count" is illegal
 	if(iColumnCount <= 3)	{iColumnCount =3;}
@@ -97,7 +97,7 @@ void IMesh::CreateCylinder(float fRadius,float fHeight,UINT iColumnCount,UINT iR
 
 };
 
-BOOL IMesh::LoadFile_STL(std::string pFilePath)
+bool IMesh::LoadFile_STL(std::string pFilePath)
 {
 	//check if buffers have been created
 	m_pVB_Mem->clear();
@@ -111,12 +111,12 @@ BOOL IMesh::LoadFile_STL(std::string pFilePath)
 	VECTOR3			tmpBoundingBoxCenter(0, 0, 0);
 
 	//加载STL
-	BOOL fileLoadSucceeded = FALSE;
+	bool fileLoadSucceeded = false;
 	fileLoadSucceeded=IFileManager::ImportFile_STL(pFilePath, tmpVertexList, *m_pIB_Mem, tmpNormalList, tmpInfo);
 	if (!fileLoadSucceeded)
 	{
 		DEBUG_MSG1("Noise Mesh : Load STL failed!");
-		return FALSE;
+		return false;
 	}
 
 	//先计算包围盒，就能求出网格的中心点（不一定是Mesh Space的原点）
@@ -143,10 +143,10 @@ BOOL IMesh::LoadFile_STL(std::string pFilePath)
 		if (i % 3 == 2) { k++; }
 	}
 
-	return TRUE;
+	return true;
 }
 
-BOOL IMesh::LoadFile_OBJ(std::string pFilePath)
+bool IMesh::LoadFile_OBJ(std::string pFilePath)
 {
 	//check if buffers have been created
 	m_pVB_Mem->clear();
@@ -157,15 +157,15 @@ BOOL IMesh::LoadFile_OBJ(std::string pFilePath)
 	std::vector<UINT> tmpNormalList;
 
 	//加载STL
-	BOOL fileLoadSucceeded = FALSE;
+	bool fileLoadSucceeded = false;
 	fileLoadSucceeded = IFileManager::ImportFile_OBJ(pFilePath, *m_pVB_Mem, *m_pIB_Mem);
 	if (!fileLoadSucceeded)
 	{
 		DEBUG_MSG1("Noise Mesh : Load OBJ failed!");
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 void IMesh::SetColor(const VECTOR4& color)

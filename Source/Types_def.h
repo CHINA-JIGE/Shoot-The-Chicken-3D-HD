@@ -20,22 +20,22 @@ public:
 		mSpecularIntensity = 1.0f;
 		mDirection = VECTOR3(1.0f, 0, 0);
 		mDiffuseIntensity = 0.5;
-		mIsEnabled = TRUE;
+		mIsEnabled = true;
 	}
 
-	BOOL operator==(DirectionalLight& Light)
+	bool operator==(DirectionalLight& Light)
 	{
 		//two memory fragments are identical
 		if (memcmp(this, &Light, sizeof(Light)) == 0)
 		{
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	VECTOR3 mAmbientColor;	 float		mSpecularIntensity;
 	VECTOR3 mDiffuseColor;		float			mDiffuseIntensity;
-	VECTOR3 mSpecularColor;	 BOOL		mIsEnabled;
+	VECTOR3 mSpecularColor;	 bool		mIsEnabled;
 	VECTOR3 mDirection;
 };
 
@@ -113,13 +113,13 @@ struct OBJ_vertexInfoIndex
 		vertexNormalID = vnID;
 	}
 
-	inline BOOL operator==(OBJ_vertexInfoIndex const& v)const
+	inline bool operator==(OBJ_vertexInfoIndex const& v)const
 	{
 		if (vertexID == v.vertexID && texcoordID == v.texcoordID && vertexNormalID == v.vertexNormalID)
 		{
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	UINT vertexID;

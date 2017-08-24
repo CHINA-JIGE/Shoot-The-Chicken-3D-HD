@@ -14,7 +14,7 @@ namespace GamePlay
 
 		void	ReduceHP(float deltaHP);
 
-		BOOL IsDead();
+		bool IsDead();
 
 		virtual void GetBoundingBox(BOUNDINGBOX& outBox)=0;
 

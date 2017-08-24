@@ -10,7 +10,7 @@ public:
 
 	~IPicture();
 
-	BOOL	LoadPPM(std::string ppmFilePath);
+	bool	LoadPPM(std::string ppmFilePath);
 
 	UINT		GetWidth();
 

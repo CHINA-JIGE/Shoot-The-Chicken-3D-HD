@@ -9,7 +9,7 @@
 
 IRenderer::IRenderer()
 {
-	mFunction_GeneratePalette();
+
 }
 
 IRenderer::~IRenderer()
@@ -47,7 +47,7 @@ void IRenderer::Init(UINT bufferWidth, UINT bufferHeight)
 
 }
 
-void IRenderer::Clear(COLOR3 clearColor,BOOL clearZBuff)
+void IRenderer::Clear(COLOR3 clearColor,bool clearZBuff)
 {
 	//clear with SPACE; buffer is a continuous memory block, but it should
 	//be regarded as a 2D buffer
@@ -58,7 +58,7 @@ void IRenderer::Clear(COLOR3 clearColor,BOOL clearZBuff)
 	}
 
 	//Depth Buffer
-	if (clearZBuff == TRUE)
+	if (clearZBuff == true)
 	{
 		for (UINT i = 0;i < mBufferWidth*mBufferHeight;++i)
 		{
@@ -77,7 +77,7 @@ void IRenderer::SetLight(UINT index, const DirectionalLight & light)
 	IRenderPipeline3D::SetLight(index, light);
 }
 
-BOOL IRenderer::DrawPicture(IPicture & pic, UINT x1, UINT y1, UINT x2, UINT y2)
+bool IRenderer::DrawPicture(IPicture & pic, UINT x1, UINT y1, UINT x2, UINT y2)
 {
 	x1 = Clamp(x1, 0, mBufferWidth-1);
 	x2 = Clamp(x2, 0, mBufferWidth-1);
@@ -88,7 +88,7 @@ BOOL IRenderer::DrawPicture(IPicture & pic, UINT x1, UINT y1, UINT x2, UINT y2)
 	if (x1 >= x2 || y1 >= y2)
 	{
 		DEBUG_MSG1("Render Picture: region info error!");
-		return FALSE;
+		return false;
 	}
 
 	UINT drawRegionWidth = x2 - x1+1;
@@ -107,7 +107,7 @@ BOOL IRenderer::DrawPicture(IPicture & pic, UINT x1, UINT y1, UINT x2, UINT y2)
 			mFunction_SetPixel(i, j, pic.GetPixel(picCoordX, picCoordY));
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void IRenderer::DrawLine(COLOR3 color, UINT x1, UINT y1, UINT x2, UINT y2)
@@ -250,7 +250,7 @@ void IRenderer::RenderMesh(IMesh& mesh)
 	IRenderPipeline3D::SetCameraPos(m_pCamera->GetPosition());
 	IRenderPipeline3D::SetMaterial(mesh.mMaterial);
 	IRenderPipeline3D::SetTexture(mesh.m_pTexture);//nullptr is OK
-	IRenderPipeline3D::SetLightingEnabled(TRUE);
+	IRenderPipeline3D::SetLightingEnabled(true);
 
 	RenderPipeline_DrawCallData drawCallData;
 	drawCallData.offset = 0;
@@ -279,7 +279,7 @@ void IRenderer::RenderPointCollection(IPointCollection & collection)
 	IRenderPipeline3D::SetViewMatrix(matV);
 	IRenderPipeline3D::SetCameraPos(m_pCamera->GetPosition());
 	IRenderPipeline3D::SetTexture(nullptr);//nullptr is OK
-	IRenderPipeline3D::SetLightingEnabled(FALSE);
+	IRenderPipeline3D::SetLightingEnabled(false);
 
 	RenderPipeline_DrawCallData drawCallData;
 	drawCallData.offset = 0;

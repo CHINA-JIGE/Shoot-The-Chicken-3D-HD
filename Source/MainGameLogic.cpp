@@ -16,7 +16,7 @@ const VECTOR3 c_CameraTargetLookat = VECTOR3(0, 0, 0);
 IMainGame::IMainGame()
 	:mChickenBoss(&mBulletMgr),
 	mPlayer(&mBulletMgr),
-	mIsPlayerVictorious(FALSE)
+	mIsPlayerVictorious(false)
 {
 }
 
@@ -147,14 +147,14 @@ void IMainGame::mFunction_UpdateAndRenderPlaying()
 	}
 
 	//state transition-  switch to Game Over Menu
-	if (mPlayer.IsDead() == TRUE)
+	if (mPlayer.IsDead() == true)
 	{
-		mFunction_GameOverAnimationInit(FALSE);
+		mFunction_GameOverAnimationInit(false);
 	}
 
-	if (mChickenBoss.IsDead() == TRUE)
+	if (mChickenBoss.IsDead() == true)
 	{
-		mFunction_GameOverAnimationInit(TRUE);
+		mFunction_GameOverAnimationInit(true);
 	}
 
 	gRenderer.Clear();
@@ -193,14 +193,14 @@ void IMainGame::mFunction_CollisionDetectionAndInteract()
 	IPointCollection tmpPC;
 
 	//player get hit
-	mBulletMgr.CollisionDetection(playerAABB,TRUE, collidePointList);
+	mBulletMgr.CollisionDetection(playerAABB,true, collidePointList);
 	if (collidePointList.size() != 0)
 	{
 		mPlayer.ReduceHP(5.0f);
 	}
 
 	//chicken get hit
-	mBulletMgr.CollisionDetection(chickenAABB, TRUE, collidePointList);
+	mBulletMgr.CollisionDetection(chickenAABB, true, collidePointList);
 	if(collidePointList.size()!=0)
 	{
 		mChickenBoss.ReduceHP(5.0f);
@@ -215,13 +215,13 @@ void IMainGame::mFunction_CollisionDetectionAndInteract()
 		mSceneMgr.GetAsteroidBoundingBox(i, rockBox);
 
 		//do nothing except killing collided bullets
-		mBulletMgr.CollisionDetection(rockBox, TRUE, collidePointList);
+		mBulletMgr.CollisionDetection(rockBox, true, collidePointList);
 	}
 
 	collidePointList.clear();
 }
 
-void IMainGame::mFunction_GameOverAnimationInit(BOOL hasPlayerWon)
+void IMainGame::mFunction_GameOverAnimationInit(bool hasPlayerWon)
 {
 	static std::default_random_engine rndEngine;
 	static std::uniform_real_distribution<float> unitDist(-1.0f, 1.0f);
@@ -232,7 +232,7 @@ void IMainGame::mFunction_GameOverAnimationInit(BOOL hasPlayerWon)
 		//clear bullets
 		mBulletMgr.KillAllBullet();
 		//player WIN
-		mIsPlayerVictorious = TRUE;
+		mIsPlayerVictorious = true;
 		//set camera to look at chicken
 		gCamera.SetLookAt(mChickenBoss.GetPosition());
 		//..explode fireworks
@@ -251,7 +251,7 @@ void IMainGame::mFunction_GameOverAnimationInit(BOOL hasPlayerWon)
 		//clear bullets
 		mBulletMgr.KillAllBullet();
 		//player LOSE
-		mIsPlayerVictorious = FALSE;
+		mIsPlayerVictorious = false;
 		//..explode fireworks
 		for (int i = 0;i < 2000;++i)
 		{
@@ -289,7 +289,7 @@ void IMainGame::mFunction_UpdateAndRenderDeathExplode()
 	{
 		gRenderer.Clear();
 
-		if(mIsPlayerVictorious==FALSE)
+		if(mIsPlayerVictorious==false)
 		{
 			//if player die, chicken lives, then chicken should be rendered
 			mChickenBoss.Render();
@@ -311,7 +311,7 @@ void IMainGame::mFunction_UpdateAndRenderDeathExplode()
 }
 
 //------------------------------MENUS------------------------------
-void IMainGame::mFunction_UpdateAndRender_GameOverMenu(BOOL hasWon)
+void IMainGame::mFunction_UpdateAndRender_GameOverMenu(bool hasWon)
 {
 	//draw to the whole screen
 	UINT width = gRenderer.GetBufferWidth();
@@ -319,7 +319,7 @@ void IMainGame::mFunction_UpdateAndRender_GameOverMenu(BOOL hasWon)
 
 	gRenderer.Clear();
 
-	if (hasWon == TRUE)
+	if (hasWon == true)
 	{
 		//WIN
 		gRenderer.DrawPicture(mGameOverMenuBgr_Win, 0, 0, width, height);
@@ -361,7 +361,7 @@ void IMainGame::mFunction_UpdateAndRender_PauseMenu()
 	case GameState::MainGame::PauseMenu::GS_Choose_Continue:
 	{
 		//ENTER or ESCAPE can go back to main game
-		if (IS_KEY_DOWN(VK_RETURN) == TRUE || IS_KEY_DOWN(VK_ESCAPE) == TRUE)
+		if (IS_KEY_DOWN(VK_RETURN) == true || IS_KEY_DOWN(VK_ESCAPE) == true)
 		{
 			//go back to main game
 			gRootGameState = GameState::GS_MainGame;

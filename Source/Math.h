@@ -35,12 +35,12 @@ namespace Math
 			return *this;
 		}
 
-		BOOL	operator==(const VECTOR2& vec)
+		bool	operator==(const VECTOR2& vec)
 		{
 			if (vec.x == x&&vec.y == y)
-				return TRUE;
+				return true;
 			else
-				return FALSE;
+				return false;
 		}
 
 		VECTOR2 operator+(const VECTOR2& vec)
@@ -122,12 +122,12 @@ namespace Math
 		}
 
 
-		BOOL	operator==(const VECTOR3& vec) 
+		bool	operator==(const VECTOR3& vec) 
 		{
 			if (vec.x == x&&vec.y == y&&vec.z == z)
-				return TRUE;
+				return true;
 			else
-				return FALSE;
+				return false;
 		}
 
 		VECTOR3 operator+(const VECTOR3& vec)
@@ -224,12 +224,12 @@ namespace Math
 			return *this;
 		}
 
-		BOOL	operator==(const VECTOR4& vec)
+		bool	operator==(const VECTOR4& vec)
 		{
 			if (vec.x == x&&vec.y == y&&vec.z == z&&vec.w==w)
-				return TRUE;
+				return true;
 			else
-				return FALSE;
+				return false;
 		}
 
 		VECTOR4 operator+(const VECTOR4& vec)
@@ -421,6 +421,6 @@ namespace Math
 
 	extern VECTOR3 Lerp(const VECTOR3& start, const VECTOR3& end, float t);
 
-	extern BOOL Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& rayEnd,const BOUNDINGBOX& box, VECTOR3& outIntersectPoint, BOOL testFrontSide);
+	extern bool Intersect_Ray_AABB(const VECTOR3& rayStart, const VECTOR3& rayEnd,const BOUNDINGBOX& box, VECTOR3& outIntersectPoint, bool testFrontSide);
 
 }

@@ -153,7 +153,7 @@ void ICamera::RotateZ_Roll(float angleZ)
 	mFunction_UpdateDirection();
 };
 
-void ICamera::fps_MoveForward(float fSignedDistance, BOOL enableYAxisMovement)
+void ICamera::fps_MoveForward(float fSignedDistance, bool enableYAxisMovement)
 {
 	//...Yaw Angle Starts at Z axis ( left-handed system) 
 	/*		Z
@@ -189,7 +189,7 @@ void ICamera::fps_MoveForward(float fSignedDistance, BOOL enableYAxisMovement)
 
 }
 
-void ICamera::fps_MoveRight(float fSignedDistance, BOOL enableYAxisMovement)
+void ICamera::fps_MoveRight(float fSignedDistance, bool enableYAxisMovement)
 {
 	//...Yaw Angle Starts at Z axis ( left-handed system) 
 	/*		

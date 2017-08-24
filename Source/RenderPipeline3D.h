@@ -7,7 +7,7 @@ class IRenderPipeline3D
 public:
 	IRenderPipeline3D();
 
-	BOOL	Init(RenderPipeline_InitData& initData);
+	bool	Init(RenderPipeline_InitData& initData);
 
 	void		DrawTriangles(RenderPipeline_DrawCallData& drawCallData);
 
@@ -22,7 +22,7 @@ public:
 
 	void		SetCameraPos(const VECTOR3& vec);
 
-	void		SetLightingEnabled(BOOL enabled=TRUE);
+	void		SetLightingEnabled(bool enabled=true);
 
 	void		SetLight(UINT index,const DirectionalLight& light);
 
@@ -47,7 +47,7 @@ private:
 	float						mTexCoord_offsetY;
 	float						mTexCoord_scale;
 	static const UINT	c_maxLightCount = 8;
-	BOOL					mLightEnabled;
+	bool					mLightEnabled;
 	DirectionalLight	mDirLight[c_maxLightCount];//"IsEnabled"control whether to enable a light in one draw call
 	Material				mMaterial;//current using material
 	IPicture*				m_pTexture;//current using texture
@@ -80,13 +80,13 @@ private:
 	std::vector<COLOR3>*		m_pRefOutColorBuffer;//output color buffer
 
 	//----------------------Helper function-----------------
-	BOOL		mFunction_HorizontalIntersect(float y,const VECTOR2& v1, const VECTOR2& v2, const VECTOR2& v3, UINT& outX1,UINT& outX2);
+	bool		mFunction_HorizontalIntersect(float y,const VECTOR2& v1, const VECTOR2& v2, const VECTOR2& v3, UINT& outX1,UINT& outX2);
 
 	void			mFunction_SetZ(UINT x, UINT y,float z);
 
 	float			mFunction_GetZ(UINT x, UINT y);
 
-	BOOL		mFunction_DepthTest(UINT x,UINT y,float testZ);
+	bool		mFunction_DepthTest(UINT x,UINT y,float testZ);
 
 	VECTOR4	mFunction_VertexLighting(const VECTOR3& vPosW,const VECTOR3& vNormalW);
 

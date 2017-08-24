@@ -20,7 +20,7 @@ void ISceneModelManager::Init(SCENE_TYPE model)
 		mSkyTexture.LoadPPM("Media/universe.ppm");
 
 		//sky dome
-		mSkyModel.CreateSphere(2000.0f,20,20,TRUE);
+		mSkyModel.CreateSphere(2000.0f,20,20,true);
 	
 		for (UINT i = 0;i < c_asteroidCount;++i)
 		{
@@ -33,7 +33,7 @@ void ISceneModelManager::Init(SCENE_TYPE model)
 		mSkyTexture.LoadPPM("Media/checkerBoard.ppm");
 
 		//sky dome
-		mSkyModel.CreateSphere(2000.0f, 20, 20, TRUE);
+		mSkyModel.CreateSphere(2000.0f, 20, 20, true);
 
 		for (UINT i = 0;i < c_asteroidCount;++i)
 		{
@@ -55,7 +55,7 @@ void ISceneModelManager::Init(SCENE_TYPE model)
 	mSceneLight.mDiffuseColor = { 1.0f,1.0f,1.0f };
 	mSceneLight.mDiffuseIntensity = 1.0f;
 	mSceneLight.mDirection = { -1.0f,-1.0f,-1.0f };
-	mSceneLight.mIsEnabled = TRUE;
+	mSceneLight.mIsEnabled = true;
 	mSceneLight.mSpecularColor = { 1.0f,1.0f,1.0f };
 	mSceneLight.mSpecularIntensity = 1.2f;
 	

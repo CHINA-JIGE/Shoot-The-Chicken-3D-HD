@@ -10,14 +10,14 @@
 /*******************************************************************
 									INTERFACE
 *********************************************************************/
-BOOL IFileManager::ImportFile_STL(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer, std::vector<UINT>& refIndexBuffer, std::vector<VECTOR3>& refNormalBuffer, std::string & refFileInfo)
+bool IFileManager::ImportFile_STL(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer, std::vector<UINT>& refIndexBuffer, std::vector<VECTOR3>& refNormalBuffer, std::string & refFileInfo)
 {
 	std::ifstream tmpFile(pFilePath, std::ios::binary);
 
 	if (!tmpFile.good())
 	{
 		DEBUG_MSG1("Load STL : file Open Failed!!");
-		return FALSE;
+		return false;
 	}
 
 	//move file cursor to the end
@@ -26,7 +26,7 @@ BOOL IFileManager::ImportFile_STL(std::string pFilePath, std::vector<VECTOR3>& r
 	if (static_fileSize < 84L)
 	{
 		DEBUG_MSG1("Load STL : file Damaged!!File Size is Too Small!!");
-		return FALSE;
+		return false;
 	}
 	tmpFile.seekg(0);
 
@@ -45,13 +45,13 @@ BOOL IFileManager::ImportFile_STL(std::string pFilePath, std::vector<VECTOR3>& r
 	}
 }
 
-BOOL IFileManager::ImportFile_OBJ(std::string pFilePath, std::vector<Vertex>& refVertexBuffer, std::vector<UINT>& refIndexBuffer)
+bool IFileManager::ImportFile_OBJ(std::string pFilePath, std::vector<Vertex>& refVertexBuffer, std::vector<UINT>& refIndexBuffer)
 {
 	std::fstream fileIn(pFilePath);
 	if (!fileIn.good())
 	{
 		DEBUG_MSG1("Import OBJ : Open File failed!!");
-		return FALSE;
+		return false;
 	}
 
 	std::vector<VECTOR3> pointList;//xyz buffer
@@ -119,14 +119,14 @@ BOOL IFileManager::ImportFile_OBJ(std::string pFilePath, std::vector<Vertex>& re
 
 				//this will be an n^2 searching....optimization will be needed
 				//non-existed element will be created
-				BOOL IsVertexExist = FALSE;
+				bool IsVertexExist = false;
 				UINT  existedVertexIndex = 0;
 				for (UINT j = 0;j<vertexInfoList.size();j++)
 				{
 					//in DEBUG mode ,[] operator will be a big performance overhead
 					if (vertexInfoList[j] == currVertex)
 					{
-						IsVertexExist = TRUE;
+						IsVertexExist = true;
 						existedVertexIndex =j;
 						break;
 					}
@@ -165,17 +165,17 @@ BOOL IFileManager::ImportFile_OBJ(std::string pFilePath, std::vector<Vertex>& re
 		refVertexBuffer.at(i) = (tmpVertex);
 	}
 
-	return TRUE;
+	return true;
 }
 
 
-BOOL IFileManager::ImportFile_PPM(std::string filePath, UINT & outWidth, UINT & outHeight, std::vector<COLOR3>& outColorBuffer)
+bool IFileManager::ImportFile_PPM(std::string filePath, UINT & outWidth, UINT & outHeight, std::vector<COLOR3>& outColorBuffer)
 {
 	std::ifstream fileIn(filePath,std::ios::binary);
-	if (fileIn.good() == FALSE)
+	if (fileIn.good() == false)
 	{
 		DEBUG_MSG1("Load PPM : File Open Failed!!");
-		return FALSE;
+		return false;
 	}
 
 	//file head (some fxxking ascii string)
@@ -203,13 +203,13 @@ BOOL IFileManager::ImportFile_PPM(std::string filePath, UINT & outWidth, UINT & 
 		outColorBuffer.at(i) = tmpColor;
 	}
 
-	return TRUE;
+	return true;
 }
 
-BOOL IFileManager::ExportFile_PPM(std::string filePath, UINT width, UINT height, const std::vector<COLOR3>& colorBuffer, BOOL bOverrideExistedFile)
+bool IFileManager::ExportFile_PPM(std::string filePath, UINT width, UINT height, const std::vector<COLOR3>& colorBuffer, bool bOverrideExistedFile)
 {
 	std::ofstream fileOut;
-	if (bOverrideExistedFile == TRUE)
+	if (bOverrideExistedFile == true)
 	{
 		//trunc to 0 size
 		fileOut.open(filePath.c_str(), std::ios::trunc);
@@ -219,10 +219,10 @@ BOOL IFileManager::ExportFile_PPM(std::string filePath, UINT width, UINT height,
 		fileOut.open(filePath.c_str(), std::ios::_Noreplace);
 	};
 
-	if(fileOut.good()==FALSE)
+	if(fileOut.good()==false)
 	{
 		DEBUG_MSG1("Save PPM : File Open Failed!!");
-		return FALSE;
+		return false;
 	}
 
 	//Write File Head
@@ -237,14 +237,14 @@ BOOL IFileManager::ExportFile_PPM(std::string filePath, UINT width, UINT height,
 	}
 	fileOut.close();
 
-	return TRUE;
+	return true;
 }
 
 
 /*******************************************************************
 										PRIVATE
 *********************************************************************/
-BOOL IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer,
+bool IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer,
 	std::vector<UINT>& refIndexBuffer, std::vector<VECTOR3>& refNormalBuffer, std::string& refFileInfo)
 {
 	std::ifstream fileIn(pFilePath, std::ios::binary);
@@ -252,7 +252,7 @@ BOOL IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::v
 	if (!fileIn.good())
 	{
 		DEBUG_MSG1("Load STL Binary : Open File Failed!");
-		return FALSE;
+		return false;
 	}
 
 	/*STL: Baidu encyclopedia
@@ -281,7 +281,7 @@ BOOL IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::v
 	if (headerInfo[0] == 's')
 	{
 		DEBUG_MSG1("Load STL Binary : File Damaged!! It's not binary STL file!");
-		return FALSE;
+		return false;
 	}
 
 	refFileInfo = headerInfo;
@@ -304,7 +304,7 @@ BOOL IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::v
 	{
 		DEBUG_MSG1("Load STL Binary : Triangle Count is larger than 500000 / Data Damamged!!");
 		fileIn.close();
-		return FALSE;
+		return false;
 	}
 
 	//then reserve spaces for vectors (optimization)
@@ -351,17 +351,17 @@ BOOL IFileManager::mFunction_ImportFile_STL_Binary(std::string pFilePath, std::v
 
 	fileIn.close();
 
-	return TRUE;
+	return true;
 }
 
-BOOL IFileManager::mFunction_ImportFile_STL_Ascii(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer, std::vector<UINT>& refIndexBuffer, std::vector<VECTOR3>& refNormalBuffer, std::string& refFileInfo)
+bool IFileManager::mFunction_ImportFile_STL_Ascii(std::string pFilePath, std::vector<VECTOR3>& refVertexBuffer, std::vector<UINT>& refIndexBuffer, std::vector<VECTOR3>& refNormalBuffer, std::string& refFileInfo)
 {
 	std::ifstream fileIn(pFilePath);
 
 	if (!fileIn.good())
 	{
 		DEBUG_MSG1("Load STL Ascii : Open File Failed!!");
-		return FALSE;
+		return false;
 	}
 
 	//newly input string
@@ -388,7 +388,7 @@ BOOL IFileManager::mFunction_ImportFile_STL_Ascii(std::string pFilePath, std::ve
 	else
 	{
 		DEBUG_MSG1("Load STL Ascii : file damaged!!");
-		return FALSE;
+		return false;
 	}
 
 	refFileInfo = objectName;
@@ -435,6 +435,6 @@ BOOL IFileManager::mFunction_ImportFile_STL_Ascii(std::string pFilePath, std::ve
 		refIndexBuffer.at(i) = i;
 	}
 
-	return TRUE;
+	return true;
 }
 
