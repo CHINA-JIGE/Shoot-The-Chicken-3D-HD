@@ -6,6 +6,7 @@
 ************************************************************/
 
 #include "MyConsoleEngine.h"
+#include <SDL.h>
 
 IRenderer::IRenderer()
 {
@@ -16,6 +17,10 @@ IRenderer::~IRenderer()
 {
 
 	//！！！！！！！这里放渲染相关东西的析构步骤
+	if (sdlWindow) SDL_DestroyWindow(sdlWindow);
+	if (sdlRender) SDL_DestroyRenderer(sdlRender);
+	if (sdlTexture) SDL_DestroyTexture(sdlTexture);
+	SDL_Quit();
 
 	delete m_pZBuffer;
 
@@ -25,7 +30,20 @@ void IRenderer::Init(UINT bufferWidth, UINT bufferHeight)
 {
 
 	//！！！！！这里放渲染相关东西的初始化，什么sdl的初始化可以放这！！！
+	//init sdl window
+	SDL_Init(SDL_INIT_VIDEO);
 
+	sdlWindow = SDL_CreateWindow(
+		"Chicken Chicken",
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, bufferWidth, bufferHeight, SDL_WINDOW_ALLOW_HIGHDPI);
+
+	SDL_Surface *sdlSurface = SDL_LoadBMP("chicken.bmp");
+	SDL_SetWindowIcon(sdlWindow, sdlSurface);
+	SDL_FreeSurface(sdlSurface);
+
+	//load the renderer
+	sdlRender = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	sdlTexture = SDL_CreateTexture(sdlRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, bufferWidth, bufferHeight);
 
 
 	//----------INITIALIZATION OF BUFFERS-----------------
@@ -293,8 +311,30 @@ void IRenderer::RenderPointCollection(IPointCollection & collection)
 
 void IRenderer::Present()
 {
-	//！！！！！！！！！！！在这里用SDL的输出图像的接口！！
-	
+	void* pix;
+	int pitch;
+	SDL_PixelFormat* format;
+
+	SDL_LockTexture(sdlTexture, NULL, &pix, &pitch);
+	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+
+
+	for (int i = 0; i < m_pColorBuffer->size(); i++) {
+		Uint32 color = SDL_MapRGBA(format, m_pColorBuffer->at(i).x * 255, m_pColorBuffer->at(i).y * 255, m_pColorBuffer->at(i).z * 255, 255);
+		((Uint32*)pix)[i] = color;
+	}
+
+	SDL_UnlockTexture(sdlTexture);
+
+	SDL_UpdateTexture(sdlTexture, NULL, pix, pitch);
+
+	SDL_QueryTexture(sdlTexture, NULL, NULL, NULL, NULL);
+
+	SDL_RenderClear(sdlRender);
+
+	SDL_RenderCopy(sdlRender, sdlTexture, NULL, NULL);
+
+	SDL_RenderPresent(sdlRender);
 }
 
 void IRenderer::SetWindowTitle(const char * titleStr)

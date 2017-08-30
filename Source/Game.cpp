@@ -21,8 +21,7 @@ namespace GamePlay
 void GamePlay::InitGlobal()
 {
 	gRootGameState = GameState::GS_StartAnimation;
-	gRenderer.Init(250, 85);
-	gRenderer.SetWindowTitle("Shoot The Chicken 3D - By Jige");
+	gRenderer.Init(640, 480);
 	gRenderer.SetCamera(gCamera);
 	gMenus.Init();
 }

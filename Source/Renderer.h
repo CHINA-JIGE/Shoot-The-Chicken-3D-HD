@@ -1,4 +1,5 @@
 #pragma once
+#include<SDL.h>
 
 const short c_ConsoleCharSize = 3;//size of one char (in pixels)
 
@@ -58,5 +59,8 @@ private:
 
 	UINT		mBufferHeight;//render buffer height
 
+	SDL_Window *sdlWindow  = NULL;
+	SDL_Renderer *sdlRender = NULL;
+	SDL_Texture *sdlTexture = NULL;
 
 };
