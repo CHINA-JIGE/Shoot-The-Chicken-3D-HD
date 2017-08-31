@@ -166,12 +166,12 @@ void IMainGame::mFunction_UpdateAndRenderPlaying()
 
 	//-------------------------HUD-----------------------
 	//player blood bar
-	UINT bloodBarWidth = UINT(50.0f* (mPlayer.GetHP() / mPlayer.GetInitialHealth()));
-	gRenderer.DrawRect({ 1.0f,0,0 }, 5, 3, 5 + bloodBarWidth, 5);
+	UINT bloodBarWidth = UINT(150.0f* (mPlayer.GetHP() / mPlayer.GetInitialHealth()));
+	gRenderer.DrawRect({ 1.0f,0,0 }, 5, 3, 5 + bloodBarWidth, 23);
 
 	//chicken boss blood bar
-	UINT chickenBloodBarWidth = UINT(80.0f*(mChickenBoss.GetHP() / mChickenBoss.GetInitialHealth()));
-	gRenderer.DrawRect({ 1.0f,1.0f,0 }, 60, 3, 60 + chickenBloodBarWidth, 5);
+	UINT chickenBloodBarWidth = UINT(240.0f*(mChickenBoss.GetHP() / mChickenBoss.GetInitialHealth()));
+	gRenderer.DrawRect({ 1.0f,1.0f,0 }, 240, 3, 240 + chickenBloodBarWidth, 23);
 
 	//cross in the middle
 	UINT width = gRenderer.GetBufferWidth();

@@ -513,11 +513,11 @@ void IRenderPipeline3D::PixelShader_DrawPoints(RasterizedFragment & inVertex)
 	COLOR3 outColor;
 	outColor = COLOR3(inVertex.color.x, inVertex.color.y, inVertex.color.z);
 	
-	//draw a bigger point (2x2 pixel)
-	int px1 = Clamp(inVertex.pixelX - 1, 0, mBufferWidth);
-	int px2 = Clamp(inVertex.pixelX + 1, 0, mBufferWidth);
-	int py1 = Clamp(inVertex.pixelY - 1, 0, mBufferHeight);
-	int py2 = Clamp(inVertex.pixelY +1, 0, mBufferHeight);
+	//draw a bigger point (6x6 pixel)
+	int px1 = Clamp(inVertex.pixelX - 3, 0, mBufferWidth);
+	int px2 = Clamp(inVertex.pixelX + 3, 0, mBufferWidth);
+	int py1 = Clamp(inVertex.pixelY - 3, 0, mBufferHeight);
+	int py2 = Clamp(inVertex.pixelY + 3, 0, mBufferHeight);
 	for (int i = px1;i < px2;i++)
 		for (int j = py1;j < py2;j++)
 			m_pRefOutColorBuffer->at(j*mBufferWidth +i) = outColor;
